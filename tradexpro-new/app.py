@@ -80,10 +80,7 @@ TRADING_ASSETS = {
     "USDT": {"name": "TetherUS", "price": 1.0002},
     "BTC": {"name": "Bitcoin / TetherUS", "price": 79974.01},
     "ETH": {"name": "Ethereum / TetherUS", "price": 2720.35},
-<<<<<<< HEAD
     "SOL": {"name": "Solana / TetherUS", "price": 145.20},
-=======
->>>>>>> 04ce3dfa203f97408af9bc68a587e28df2e916e5
     "ALGO": {"name": "ALGO / TetherUS", "price": 0.09503},
     "XRP": {"name": "XRP / TetherUS", "price": 1.4187},
     "ADA": {"name": "Cardano / TetherUS", "price": 0.2209},
@@ -153,10 +150,7 @@ def transaction_history():
     return render_template("wallets.html")
 
 @app.route("/markets")
-<<<<<<< HEAD
 @app.route("/markets.html")
-=======
->>>>>>> 04ce3dfa203f97408af9bc68a587e28df2e916e5
 def markets():
     return render_template("markets.html")
 
