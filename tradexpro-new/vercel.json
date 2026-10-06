@@ -1,23 +1,17 @@
 {
+  "$schema": "https://vercel.com/api/v1/config.json",
   "version": 2,
   "buildCommand": "python -m compileall -q app.py api",
-  "outputDirectory": ".",
-  "routes": [
+  "installCommand": "pip install -r requirements.txt",
+  "rewrites": [
     {
-      "src": "/api/(.*)",
-      "dest": "/api/index.py"
-    },
-    {
-      "src": "/static/(.*)",
-      "dest": "/static/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/api/index.py"
+      "source": "/(.*)",
+      "destination": "/api/index.py"
     }
   ],
   "functions": {
     "api/index.py": {
+      "runtime": "python3.14",
       "includeFiles": [
         "app.py",
         "templates/**",
