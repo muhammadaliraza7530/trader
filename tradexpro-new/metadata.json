@@ -1,0 +1,8 @@
+{
+  "name": "TradeXPro",
+  "description": "Cryptocurrency and asset trading platform with market charts, bot trading, and wallet management.",
+  "permissions": [],
+  "capabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

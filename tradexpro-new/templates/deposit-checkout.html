@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TradeXPro - Deposit Checkout</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='deposit-checkout.css') }}">
+</head>
+<body class="dashboard-page checkout-page">
+    <main class="dashboard-shell">
+        <header class="checkout-header">
+            <div class="checkout-title-group">
+                <a class="checkout-back" href="{{ url_for('deposit_methods') }}" aria-label="Back to deposit methods">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+                </a>
+                <h1>Deposit Checkout</h1>
+            </div>
+            <div class="top-actions">
+                <a class="icon-button" href="{{ url_for('help_support') }}" aria-label="Help and support">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13v-2a8 8 0 0 1 16 0v2M4 13h3v6H5a2 2 0 0 1-2-2v-2a2 2 0 0 1 1-2Zm16 0h-3v6h2a2 2 0 0 0 2-2v-2a2 2 0 0 0-1-2ZM9 20h5"/><circle cx="12" cy="4" r="1"/></svg>
+                </a>
+                <button class="icon-button notification-button" type="button" aria-label="Notifications">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 21h4"/></svg>
+                </button>
+            </div>
+        </header>
+
+        <div class="checkout-content">
+            <section class="checkout-method" aria-labelledby="checkout-method-title">
+                <img class="checkout-qr" src="{{ url_for('static', filename='demo-deposit-qr.png') }}" alt="Complete square demo QR code. Not valid for payments." width="120" height="120">
+                <h2 id="checkout-method-title">Deposit with {{ method.title }}</h2>
+            </section>
+
+            <section class="checkout-address" aria-label="Deposit currency and demo address">
+                <div class="checkout-currency">
+                    <span class="checkout-label">Currency</span>
+                    <strong>{{ method.currency }}</strong>
+                </div>
+                <div class="checkout-address-line">
+                    <span class="checkout-label">{{ method.network }}</span>
+                    <div class="address-copy-row">
+                        <code id="demo-address">{{ method.address }}</code>
+                        <button class="copy-address" id="copy-address" type="button" aria-label="Copy demo address">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></svg>
+                        </button>
+                    </div>
+                </div>
+                <p class="demo-address-warning">Preview only. Do not send funds to this address.</p>
+            </section>
+
+            <form class="checkout-form" id="deposit-form">
+                <label class="checkout-input-shell" for="deposit-amount">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="10" cy="6" rx="7" ry="3"/><path d="M3 6v4c0 1.7 3.1 3 7 3M3 10v4c0 1.7 3.1 3 7 3M3 14v4c0 1.7 3.1 3 7 3M17 10c2.2 0 4-1 4-2s-1.8-2-4-2-4 1-4 2 1.8 2 4 2ZM13 8v3c0 1.1 1.8 2 4 2s4-.9 4-2V8m-8 3v3c0 1.1 1.8 2 4 2s4-.9 4-2v-3m-8 3v3c0 1.1 1.8 2 4 2s4-.9 4-2v-3"/></svg>
+                    <input id="deposit-amount" name="amount" type="number" min="{{ method.minimum_amount }}" max="{{ method.maximum_amount }}" step="0.01" placeholder="Enter Deposit Amount" required>
+                </label>
+                <label class="checkout-input-shell" for="transaction-id">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="3"/><path d="M9 7h6M9 11h6M9 15h3"/></svg>
+                    <input id="transaction-id" name="transaction_id" type="text" placeholder="Enter Deposit Transaction Id" required>
+                </label>
+
+                <div class="checkout-rates" aria-label="Deposit limits and exchange rate">
+                    <p><span>Minimum limit</span><strong>{{ method.minimum }}</strong></p>
+                    <p><span>Maximum limit</span><strong>{{ method.maximum }}</strong></p>
+                    <p><span>1 USD =</span><strong>{{ method.rate }}</strong></p>
+                    <p><span>Network</span><strong>{{ method.network }}</strong></p>
+                </div>
+
+                <button class="submit-deposit" type="submit">Submit Deposit Request</button>
+                <p class="checkout-status" id="checkout-status" aria-live="polite"></p>
+            </form>
+        </div>
+    {% include "_bottom-nav.html" %}
+    </main>
+
+    <dialog class="checkout-dialog" id="checkout-dialog">
+        <form method="dialog">
+            <p class="checkout-dialog-kicker">DEMO PREVIEW</p>
+            <h2>Deposit request not sent</h2>
+            <p>Payment processing is not configured in this frontend preview.</p>
+            <button value="cancel">Close</button>
+        </form>
+    </dialog>
+
+    <script>
+        document.getElementById('copy-address').addEventListener('click', async () => {
+            const copyButton = document.getElementById('copy-address');
+            try {
+                await navigator.clipboard.writeText(document.getElementById('demo-address').textContent);
+                copyButton.setAttribute('aria-label', 'Copied demo address');
+            } catch (error) {
+                copyButton.setAttribute('aria-label', 'Demo address is not a real wallet address');
+            }
+        });
+
+        const depositForm = document.getElementById('deposit-form');
+        const checkoutDialog = document.getElementById('checkout-dialog');
+        depositForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+            checkoutDialog.showModal();
+        });
+    </script>
+</body>
+</html>

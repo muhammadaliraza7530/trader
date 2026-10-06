@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TradeXPro - Help &amp; Support</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='help-support.css') }}">
+</head>
+<body class="dashboard-page help-page">
+    <main class="dashboard-shell">
+        <header class="help-header">
+            <div class="help-title-group">
+                <a class="help-back" href="{{ url_for('dashboard') }}" aria-label="Back to home">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+                </a>
+                <h1>Help &amp; Support</h1>
+            </div>
+            <div class="top-actions">
+                <span class="icon-button" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><path d="M4 13v-2a8 8 0 0 1 16 0v2M4 13h3v6H5a2 2 0 0 1-2-2v-2a2 2 0 0 1 1-2Zm16 0h-3v6h2a2 2 0 0 0 2-2v-2a2 2 0 0 0-1-2ZM9 20h5"/><circle cx="12" cy="4" r="1"/></svg>
+                </span>
+                <button class="icon-button notification-button" type="button" aria-label="Notifications">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 21h4"/></svg>
+                </button>
+            </div>
+        </header>
+
+        <section class="contact-section" aria-labelledby="contact-heading">
+            <h2 id="contact-heading">Contact</h2>
+            <div class="contact-options">
+                <button class="contact-option" type="button" data-contact="Telegram">
+                    <span>Telegram</span>
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+                </button>
+                <button class="contact-option" type="button" data-contact="Whatsapp">
+                    <span>Whatsapp</span>
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+                </button>
+            </div>
+        </section>
+    {% include "_bottom-nav.html" %}
+    </main>
+
+    <dialog class="contact-dialog" id="contact-dialog">
+        <form method="dialog">
+            <button class="contact-dialog-close" value="cancel" aria-label="Close">×</button>
+            <h2 id="contact-dialog-title">Telegram</h2>
+            <p>Support contact details are not configured in this preview.</p>
+            <button class="contact-dialog-confirm" value="cancel">Close</button>
+        </form>
+    </dialog>
+
+    <script>
+        const contactDialog = document.getElementById('contact-dialog');
+        const contactDialogTitle = document.getElementById('contact-dialog-title');
+
+        document.querySelectorAll('[data-contact]').forEach((contact) => {
+            contact.addEventListener('click', () => {
+                contactDialogTitle.textContent = contact.dataset.contact;
+                contactDialog.showModal();
+            });
+        });
+    </script>
+</body>
+</html>

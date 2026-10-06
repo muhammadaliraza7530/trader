@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TradeXPro - Log In</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
+</head>
+<body>
+    <main class="login-layout">
+        <section class="login-panel" aria-labelledby="login-title">
+            <header class="login-header">
+                <img class="login-logo" src="{{ url_for('static', filename='logo/logo.png') }}" onerror="if(!this.dataset.retry){this.dataset.retry=1;this.src='/logo/logo.png';}else if(this.dataset.retry==1){this.dataset.retry=2;this.src='/public/logo/logo.png';}" alt="TradeXPro logo">
+                <h1 id="login-title">Log In</h1>
+                <p>After login you can Trade.</p>
+            </header>
+
+            <form class="login-form" action="/login" method="post">
+                {% if message %}
+                    <p class="form-message" role="status">{{ message }}</p>
+                {% endif %}
+                <div class="form-field">
+                    <label for="username">Username</label>
+                    <div class="input-shell">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <circle cx="12" cy="8" r="4"></circle>
+                            <path d="M4.5 21a7.5 7.5 0 0 1 15 0z"></path>
+                        </svg>
+                        <input id="username" name="username" type="text" placeholder="enter your username" autocomplete="username" required>
+                    </div>
+                </div>
+
+                <div class="form-field">
+                    <label for="password">Password</label>
+                    <div class="input-shell">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <rect x="4" y="10" width="16" height="12" rx="2"></rect>
+                            <path d="M8 10V7a4 4 0 1 1 8 0v3"></path>
+                            <circle class="lock-keyhole" cx="12" cy="15.5" r="1"></circle>
+                        </svg>
+                        <input id="password" name="password" type="password" placeholder="enter your password" autocomplete="current-password" required>
+                    </div>
+                </div>
+
+                <button class="sign-in-button" type="submit">Sign In</button>
+            </form>
+
+            <p class="signup-prompt">Not a member? <a href="{{ url_for('register') }}">Create an account</a></p>
+        </section>
+    </main>
+</body>
+</html>

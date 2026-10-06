@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0b0e11">
+    <title>{{ site_name }} - Profile</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="{{ url_for('static', filename='config.js') }}"></script>
+    <script src="{{ url_for('static', filename='uid-copy.js') }}" defer></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='profile.css') }}">
+</head>
+<body class="profile-page">
+    <main class="profile-shell">
+        <header class="profile-topbar">
+            <a class="profile-icon-button back-button" href="{{ url_for('dashboard') }}" aria-label="Back to Home">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6M9 12h12"></path></svg>
+            </a>
+            <h1>Center <span>/</span> Profile</h1>
+            <nav class="profile-header-actions" aria-label="Profile shortcuts">
+                <a class="profile-icon-button" href="{{ url_for('help_support') }}" aria-label="Help and support">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M9.5 9a2.5 2.5 0 1 1 4.3 1.7c-1 .9-1.8 1.2-1.8 2.8m0 3h.01"></path></svg>
+                </a>
+                <a class="profile-icon-button" href="/security.html" aria-label="Security settings">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a8 8 0 0 0 0-6l1.4-1.1-1.4-2.4-1.7.6a8 8 0 0 0-5.7-1.7L11.7 2h-2.8l-.3 2.4a8 8 0 0 0-2.9 1.7L4 5.5 2.6 8l1.8 1.2a8 8 0 0 0 0 5.6L2.6 16l1.4 2.4 1.7-.6a8 8 0 0 0 5.7 1.7l.3 2.4h2.8l.3-2.4a8 8 0 0 0 2.9-1.7l1.7.6 1.4-2.4L19.4 15Z"></path></svg>
+                </a>
+            </nav>
+        </header>
+
+        <section class="user-card" aria-labelledby="user-name">
+            <div class="user-identity">
+                <div class="user-avatar" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"></circle><path d="M5 20a7 7 0 0 1 14 0"></path></svg>
+                </div>
+                <div class="user-details">
+                    <h2 id="user-name">Alex Morgan</h2>
+                    <p>alex.morgan@email.com</p>
+                </div>
+            </div>
+            <div class="uid-panel">
+                <div><span class="eyebrow">USER ID</span><strong data-uid-value>TXP104582</strong></div>
+                <button type="button" class="copy-button" data-copy-uid aria-label="Copy user ID">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"></rect><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"></path></svg>
+                    Copy
+                </button>
+            </div>
+            <div class="user-badges" aria-label="Account status">
+                <span class="status-badge kyc-badge"><i></i>KYC Unverified</span>
+                <span class="status-badge vip-badge"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 8 4 4 5-7 5 7 4-4-2 11H5L3 8Z"></path></svg>VIP 0</span>
+            </div>
+        </section>
+
+        <a class="support-banner" href="{{ url_for('help_support') }}">
+            <span class="support-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M4 13v-2a8 8 0 0 1 16 0v2M4 13h3v6H5a2 2 0 0 1-2-2v-2a2 2 0 0 1 1-2Zm16 0h-3v6h2a2 2 0 0 0 2-2v-2a2 2 0 0 0-1-2ZM9 20h5"></path></svg>
+            </span>
+            <span class="support-copy"><strong>{{ site_name }} Support</strong><small>Get help with your account</small></span>
+            <svg class="support-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg>
+        </a>
+
+        <section class="recommend-section" aria-labelledby="recommend-title">
+            <div class="section-heading">
+                <h2 id="recommend-title">Recommend</h2>
+                <svg class="recommend-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg>
+            </div>
+            <nav class="action-grid" aria-label="Account actions">
+                <a class="action-card" href="/kyc.html">
+                    <span class="action-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 20 6v5c0 5-3.4 8.3-8 10-4.6-1.7-8-5-8-10V6l8-3Z"></path><path d="m9 12 2 2 4-4"></path></svg></span>
+                    <strong>KYC Verification</strong>
+                </a>
+                <a class="action-card" href="/security.html">
+                    <span class="action-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2"></rect><path d="M8 10V7a4 4 0 1 1 8 0v3M12 14v3"></path></svg></span>
+                    <strong>Security &amp; 2FA</strong>
+                </a>
+                <a class="action-card" href="/transfer.html">
+                    <span class="action-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h15m-4-4 4 4-4 4M20 16H5m4-4-4 4 4 4"></path></svg></span>
+                    <strong>UID Transfer</strong>
+                </a>
+                <a class="action-card" href="/staking.html">
+                    <span class="action-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 9 5-9 5-9-5 9-5Zm-9 9 9 5 9-5M3 16l9 5 9-5"></path></svg></span>
+                    <strong>Staking / Earn</strong>
+                </a>
+                <a class="action-card" href="/transactions.html">
+                    <span class="action-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16M4 10h16M4 15h10M4 20h8"></path><path d="m17 17 2 2 3-4"></path></svg></span>
+                    <strong>Transaction Logs</strong>
+                </a>
+                <a class="action-card" href="/referral.html">
+                    <span class="action-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3"></circle><path d="M3 20a6 6 0 0 1 12 0m2-10h5m-2-2 2 2-2 2"></path></svg></span>
+                    <strong>Referral</strong>
+                </a>
+                <a class="action-card" href="/support.html">
+                    <span class="action-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M9.5 9a2.5 2.5 0 1 1 4.3 1.7c-1 .9-1.8 1.2-1.8 2.8m0 3h.01"></path></svg></span>
+                    <strong>Support</strong>
+                </a>
+            </nav>
+        </section>
+        <footer class="profile-footer"><span>{{ site_name }}</span><span>Account Center</span></footer>
+    </main>
+    <div class="fixed bottom-5 left-1/2 z-50 w-max max-w-[calc(100vw-2rem)] -translate-x-1/2 translate-y-2 rounded-xl border border-gray-700 bg-[#181A20] px-4 py-3 text-sm text-white opacity-0 shadow-xl transition duration-200" data-uid-toast role="status" aria-live="polite"></div>
+</body>
+</html>

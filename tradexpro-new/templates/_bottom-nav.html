@@ -1,0 +1,22 @@
+<nav class="bottom-nav grid grid-cols-5" aria-label="Main navigation">
+    <a class="nav-item flex min-w-0 flex-col items-center justify-center gap-[3px] text-[9px]{% if request.endpoint == 'dashboard' %} is-active text-white{% else %} text-[#899bb5]{% endif %}" href="{{ url_for('dashboard') }}"{% if request.endpoint == 'dashboard' %} aria-current="page"{% endif %}>
+        <svg class="nav-icon-home" viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></svg>
+        <span>Home</span>
+    </a>
+    <a class="nav-item flex min-w-0 flex-col items-center justify-center gap-[3px] text-[9px]{% if request.endpoint == 'markets' %} is-active text-white{% else %} text-[#899bb5]{% endif %}" href="{{ url_for('markets') }}"{% if request.endpoint == 'markets' %} aria-current="page"{% endif %}>
+        <svg class="nav-icon-markets" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V11M10 20V5M16 20V8M22 20V3"/></svg>
+        <span>Markets</span>
+    </a>
+    <a class="nav-item flex min-w-0 flex-col items-center justify-center gap-[3px] text-[9px]{% if request.endpoint in ['trading', 'bot_trade'] %} is-active text-white{% else %} text-[#899bb5]{% endif %}" href="{{ url_for('trading', symbol='BTC') }}"{% if request.endpoint in ['trading', 'bot_trade'] %} aria-current="page"{% endif %}>
+        <svg class="nav-icon-trade" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18V9m0-3V4m8 16v-5m0-3V4m8 16v-2m0-3V4M2 9h4m4 3h4m4 3h4"/></svg>
+        <span>Trade</span>
+    </a>
+    <a class="nav-item flex min-w-0 flex-col items-center justify-center gap-[3px] text-[9px]{% if request.endpoint == 'staking' %} is-active text-white{% else %} text-[#899bb5]{% endif %}" href="{{ url_for('staking') }}"{% if request.endpoint == 'staking' %} aria-current="page"{% endif %}>
+        <svg class="nav-icon-staking" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 9 5-9 5-9-5 9-5Zm-9 9 9 5 9-5M3 16l9 5 9-5"/></svg>
+        <span>Staking</span>
+    </a>
+    <a class="nav-item flex min-w-0 flex-col items-center justify-center gap-[3px] text-[9px]{% if request.endpoint in ['wallets', 'deposit_methods', 'withdraw_methods', 'deposit_checkout', 'withdraw_confirm'] %} is-active text-white{% else %} text-[#899bb5]{% endif %}" href="{{ url_for('wallets') }}"{% if request.endpoint in ['wallets', 'deposit_methods', 'withdraw_methods', 'deposit_checkout', 'withdraw_confirm'] %} aria-current="page"{% endif %}>
+        <svg class="nav-icon-wallet" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="5" width="20" height="15" rx="2"/><path d="M2 9h20m-5 5h2"/></svg>
+        <span>Wallet</span>
+    </a>
+</nav>

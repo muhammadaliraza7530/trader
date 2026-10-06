@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TradeXPro - Bot Trading</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='bot-trade.css') }}">
+</head>
+<body class="dashboard-page bot-trade-page">
+    <main class="dashboard-shell">
+        <div class="dashboard-content">
+            <header class="bot-topbar">
+                <div class="bot-title-group">
+                    <a class="back-button" href="{{ url_for('dashboard') }}" aria-label="Back to home">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+                    </a>
+                    <h1>Bot Trading</h1>
+                </div>
+                <div class="top-actions">
+                    <a class="icon-button" href="{{ url_for('help_support') }}" aria-label="Help and support">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13v-2a8 8 0 0 1 16 0v2M4 13h3v6H5a2 2 0 0 1-2-2v-2a2 2 0 0 1 1-2Zm16 0h-3v6h2a2 2 0 0 0 2-2v-2a2 2 0 0 0-1-2ZM9 20h5"/><circle cx="12" cy="4" r="1"/></svg>
+                    </a>
+                    <button class="icon-button notification-button" type="button" aria-label="Notifications">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 21h4"/></svg>
+                    </button>
+                </div>
+            </header>
+
+            <section class="bot-balances" aria-label="Trading balances">
+                <div class="bot-balance">
+                    <p class="bot-balance-label">Total Balance (USD)</p>
+                    <p class="bot-balance-value">0.00</p>
+                    <p class="bot-balance-conversion">≈ 0.00$</p>
+                </div>
+                <div class="bot-balance bot-balance-right">
+                    <p class="bot-balance-label">Bot Balance (USD)</p>
+                    <p class="bot-balance-value">0.00</p>
+                    <p class="bot-balance-conversion">≈ 0.00$</p>
+                </div>
+            </section>
+        </div>
+
+        <section class="bot-stage" aria-label="Start automated trading">
+            <div class="trading-illustration" aria-hidden="true">
+                <span class="trade-spark spark-one"></span>
+                <span class="trade-spark spark-two"></span>
+                <span class="trade-spark spark-three"></span>
+                <div class="trade-platform platform-back"></div>
+                <div class="trade-platform platform-front"></div>
+                <div class="trade-device">
+                    <div class="device-screen">
+                        <span class="screen-header"></span>
+                        <span class="screen-value"></span>
+                        <div class="screen-chart"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+                    </div>
+                </div>
+                <div class="trade-coin"><span>$</span></div>
+                <div class="trade-token token-back"></div>
+                <div class="trade-token token-front"></div>
+            </div>
+            <button class="start-trading-button" id="start-trading" type="button" aria-pressed="false">Start Trading</button>
+        </section>
+
+        <section class="trade-history" aria-labelledby="history-heading">
+            <h2 id="history-heading">Bot Trade History</h2>
+            <div class="history-empty" aria-live="polite"></div>
+        </section>
+    {% include "_bottom-nav.html" %}
+    </main>
+    <script>
+        const startButton = document.getElementById('start-trading');
+        startButton.addEventListener('click', () => {
+            const isRunning = startButton.getAttribute('aria-pressed') === 'true';
+            startButton.setAttribute('aria-pressed', String(!isRunning));
+            startButton.textContent = isRunning ? 'Start Trading' : 'Stop Trading';
+            startButton.classList.toggle('is-running', !isRunning);
+        });
+    </script>
+</body>
+</html>

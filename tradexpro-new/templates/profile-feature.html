@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0b0e11">
+    <title>{{ site_name }} - {{ feature_title }}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='profile.css') }}">
+</head>
+<body class="profile-page">
+    <main class="profile-shell feature-shell">
+        <header class="profile-topbar">
+            <a class="profile-icon-button back-button" href="{{ url_for('profile') }}" aria-label="Back to Profile">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6M9 12h12"></path></svg>
+            </a>
+            <h1>{{ feature_title }}</h1>
+            <a class="profile-icon-button" href="{{ url_for('help_support') }}" aria-label="Help and support">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M9.5 9a2.5 2.5 0 1 1 4.3 1.7c-1 .9-1.8 1.2-1.8 2.8m0 3h.01"></path></svg>
+            </a>
+        </header>
+        <section class="feature-preview">
+            <span class="feature-preview-icon" aria-hidden="true">i</span>
+            <h2>{{ feature_title }}</h2>
+            <p>This account feature is a frontend preview and is not connected to an account service yet.</p>
+            <a class="feature-back-link" href="{{ url_for('profile') }}">Return to Profile</a>
+        </section>
+    </main>
+</body>
+</html>
