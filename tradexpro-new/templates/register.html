@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0b0e11">
+    <title>Create account</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="/static/config.js"></script>
+    <script src="/static/register.js" defer></script>
+</head>
+<body class="min-h-screen bg-[#0B0E11] text-[#EAECEF] antialiased">
+    <main class="mx-auto flex min-h-screen w-full max-w-6xl flex-col justify-center px-4 py-8 sm:px-6">
+        <a class="mb-5 inline-flex w-fit items-center gap-2 rounded-lg px-2 py-2 text-sm text-gray-400 transition hover:text-[#F0B90B] focus:outline-none focus:ring-2 focus:ring-[#F0B90B]" href="/login" aria-label="Back to login">
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="m15 18-6-6 6-6M9 12h12"/></svg>
+            Back to Log In
+        </a>
+
+        <section class="mx-auto w-full max-w-md rounded-2xl border border-gray-800 bg-[#181A20] p-5 shadow-2xl shadow-black/30 sm:p-8" aria-labelledby="register-title">
+            <header class="mb-7 text-center">
+                <a class="mb-6 inline-flex items-center gap-2 text-lg font-bold tracking-tight text-white" href="/" aria-label="Home">
+                    <span data-site-initial class="grid h-9 w-9 place-items-center rounded-xl border border-[#F0B90B]/20 bg-[#F0B90B]/10 text-sm font-extrabold text-[#F0B90B]" aria-hidden="true"></span>
+                    <span data-site-name></span>
+                </a>
+                <p class="mb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-[#F0B90B]">Create your account</p>
+                <h1 id="register-title" class="text-2xl font-semibold tracking-tight text-white sm:text-3xl">Join the exchange</h1>
+                <p class="mt-2 text-sm leading-6 text-gray-400">Create an account to get started with <span data-site-name></span>.</p>
+            </header>
+
+            <form id="register-form" class="space-y-4" novalidate>
+                <div>
+                    <label for="full-name" class="mb-1.5 block text-xs font-medium text-gray-300">Full Name</label>
+                    <input id="full-name" name="full_name" type="text" autocomplete="name" placeholder="Enter your full name" required aria-describedby="full-name-error" class="w-full rounded-xl border border-gray-700 bg-[#0B0E11] px-3.5 py-3 text-sm text-white outline-none transition placeholder:text-gray-600 hover:border-gray-600 focus:border-[#F0B90B] focus:ring-2 focus:ring-[#F0B90B]/15 aria-[invalid=true]:border-red-500">
+                    <p id="full-name-error" class="mt-1.5 text-xs text-red-400" aria-live="polite"></p>
+                </div>
+
+                <div>
+                    <label for="contact" class="mb-1.5 block text-xs font-medium text-gray-300">Email or Mobile Number</label>
+                    <input id="contact" name="contact" type="text" inputmode="email" autocomplete="username" placeholder="Email address or phone number" required aria-describedby="contact-error" class="w-full rounded-xl border border-gray-700 bg-[#0B0E11] px-3.5 py-3 text-sm text-white outline-none transition placeholder:text-gray-600 hover:border-gray-600 focus:border-[#F0B90B] focus:ring-2 focus:ring-[#F0B90B]/15 aria-[invalid=true]:border-red-500">
+                    <p id="contact-error" class="mt-1.5 text-xs text-red-400" aria-live="polite"></p>
+                </div>
+
+                <div>
+                    <label for="password" class="mb-1.5 block text-xs font-medium text-gray-300">Password</label>
+                    <div class="relative">
+                        <input id="password" name="password" type="password" autocomplete="new-password" placeholder="At least 8 characters" required aria-describedby="password-error" class="w-full rounded-xl border border-gray-700 bg-[#0B0E11] py-3 pl-3.5 pr-12 text-sm text-white outline-none transition placeholder:text-gray-600 hover:border-gray-600 focus:border-[#F0B90B] focus:ring-2 focus:ring-[#F0B90B]/15 aria-[invalid=true]:border-red-500">
+                        <button type="button" data-password-toggle="password" class="absolute inset-y-0 right-2 grid w-9 place-items-center rounded-lg text-gray-500 transition hover:text-white focus:outline-none focus:ring-2 focus:ring-[#F0B90B]" aria-label="Show password" aria-pressed="false">
+                            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>
+                        </button>
+                    </div>
+                    <p id="password-error" class="mt-1.5 text-xs text-red-400" aria-live="polite"></p>
+                </div>
+
+                <div>
+                    <label for="confirm-password" class="mb-1.5 block text-xs font-medium text-gray-300">Confirm Password</label>
+                    <div class="relative">
+                        <input id="confirm-password" name="confirm_password" type="password" autocomplete="new-password" placeholder="Enter your password again" required aria-describedby="confirm-password-error" class="w-full rounded-xl border border-gray-700 bg-[#0B0E11] py-3 pl-3.5 pr-12 text-sm text-white outline-none transition placeholder:text-gray-600 hover:border-gray-600 focus:border-[#F0B90B] focus:ring-2 focus:ring-[#F0B90B]/15 aria-[invalid=true]:border-red-500">
+                        <button type="button" data-password-toggle="confirm-password" class="absolute inset-y-0 right-2 grid w-9 place-items-center rounded-lg text-gray-500 transition hover:text-white focus:outline-none focus:ring-2 focus:ring-[#F0B90B]" aria-label="Show confirm password" aria-pressed="false">
+                            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>
+                        </button>
+                    </div>
+                    <p id="confirm-password-error" class="mt-1.5 text-xs text-red-400" aria-live="polite"></p>
+                </div>
+
+                <div>
+                    <label for="referral-code" class="mb-1.5 block text-xs font-medium text-gray-300">Referral Code <span class="font-normal text-gray-500">(Optional)</span></label>
+                    <input id="referral-code" name="referral_code" type="text" autocomplete="off" placeholder="Enter referral code" class="w-full rounded-xl border border-gray-700 bg-[#0B0E11] px-3.5 py-3 text-sm text-white outline-none transition placeholder:text-gray-600 hover:border-gray-600 focus:border-[#F0B90B] focus:ring-2 focus:ring-[#F0B90B]/15">
+                </div>
+
+                <div>
+                    <label for="terms" class="flex cursor-pointer items-start gap-2.5 text-xs leading-5 text-gray-400">
+                        <input id="terms" name="terms" type="checkbox" required aria-describedby="terms-error" class="mt-0.5 h-4 w-4 shrink-0 rounded border-gray-600 bg-[#0B0E11] accent-[#F0B90B] focus:ring-2 focus:ring-[#F0B90B]">
+                        <span>I agree to the <a href="/static/terms.html" class="font-medium text-[#F0B90B] underline-offset-4 hover:underline">Terms &amp; Conditions</a>.</span>
+                    </label>
+                    <p id="terms-error" class="mt-1.5 text-xs text-red-400" aria-live="polite"></p>
+                </div>
+
+                <button type="submit" class="w-full rounded-xl bg-[#F0B90B] px-4 py-3.5 text-sm font-bold text-[#181A20] shadow-lg shadow-[#F0B90B]/10 transition hover:bg-[#F8D12F] focus:outline-none focus:ring-2 focus:ring-[#F0B90B] focus:ring-offset-2 focus:ring-offset-[#181A20] active:translate-y-px">Create Account</button>
+            </form>
+
+            <p class="mt-6 text-center text-sm text-gray-400">Already have an account? <a href="/login" class="font-semibold text-[#F0B90B] transition hover:text-[#F8D12F]">Log In</a></p>
+            <p class="mt-5 border-t border-gray-800 pt-4 text-center text-[11px] leading-5 text-gray-500">Frontend preview only. Account creation is not connected.</p>
+        </section>
+        <footer class="mt-5 text-center text-xs text-gray-600">© <span data-site-name></span></footer>
+    </main>
+
+    <div id="register-toast" class="pointer-events-none fixed bottom-5 left-1/2 z-50 w-max max-w-[calc(100vw-2rem)] -translate-x-1/2 translate-y-2 rounded-xl border border-gray-700 bg-[#181A20] px-4 py-3 text-sm text-gray-100 opacity-0 shadow-2xl transition duration-200" role="status" aria-live="polite"></div>
+</body>
+</html>

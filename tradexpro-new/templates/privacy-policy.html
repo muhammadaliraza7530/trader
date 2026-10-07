@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0b0e11">
+    <title>{{ site_name }} - Privacy Policy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='register.css') }}">
+</head>
+<body class="register-page">
+    <main class="register-shell">
+        <a class="register-back" href="{{ url_for('register') }}">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6M9 12h12"></path></svg>
+            <span>Back to registration</span>
+        </a>
+        <section class="register-card policy-card">
+            <header class="register-header">
+                <a class="register-brand" href="{{ url_for('hello_world') }}"><span>{{ site_name }}</span></a>
+                <span class="register-eyebrow">LEGAL INFORMATION</span>
+                <h1>Privacy Policy</h1>
+            </header>
+            <p class="policy-notice">A complete privacy policy has not been configured for this frontend preview. Do not submit personal information or use this demo as a live financial service.</p>
+            <a class="create-account-button policy-return" href="{{ url_for('register') }}">Return to registration</a>
+        </section>
+    </main>
+</body>
+</html>

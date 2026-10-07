@@ -1,0 +1,345 @@
+.withdraw-confirm-page {
+    height: 100vh;
+    height: 100svh;
+    overflow: hidden;
+}
+
+.withdraw-confirm-page .dashboard-shell {
+    height: 100vh;
+    height: 100svh;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.withdraw-confirm-header,
+.withdraw-confirm-title-group {
+    display: flex;
+    align-items: center;
+}
+
+.withdraw-confirm-header {
+    justify-content: space-between;
+    min-height: 60px;
+    padding: 14px 12px 0;
+}
+
+.withdraw-confirm-title-group {
+    min-width: 0;
+    gap: 10px;
+}
+
+.withdraw-confirm-title-group h1 {
+    overflow: hidden;
+    margin: 0;
+    color: #f5f5f5;
+    font-size: 17px;
+    font-weight: 500;
+    line-height: 24px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.withdraw-confirm-back {
+    display: grid;
+    flex: 0 0 24px;
+    width: 24px;
+    height: 28px;
+    place-items: center;
+    color: #d7deea;
+}
+
+.withdraw-confirm-back svg {
+    width: 22px;
+    height: 22px;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 2.4;
+}
+
+.withdraw-confirm-back:focus-visible {
+    outline: 2px solid #f0b90b;
+    outline-offset: 2px;
+}
+
+.withdraw-confirm-content {
+    min-height: 0;
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+    scrollbar-width: none;
+}
+
+.withdraw-confirm-content::-webkit-scrollbar {
+    display: none;
+}
+
+.withdraw-gateway-card {
+    padding: 12px 20px 6px;
+    border: 1px solid #3a4656;
+    border-radius: 12px;
+}
+
+.gateway-detail {
+    display: flex;
+    min-height: 48px;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    border-bottom: 1px solid #35404e;
+}
+
+.gateway-detail-last {
+    min-height: 54px;
+    border-bottom: 0;
+}
+
+.gateway-detail span {
+    color: #718096;
+    font-size: 11px;
+    line-height: 14px;
+}
+
+.gateway-detail strong {
+    color: #cad4e2;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 16px;
+}
+
+.withdraw-form {
+    margin-top: 12px;
+}
+
+.withdraw-input-shell {
+    display: flex;
+    width: 100%;
+    height: 42px;
+    align-items: center;
+    gap: 10px;
+    padding: 0 12px;
+    border: 1px solid #465364;
+    border-radius: 6px;
+    color: #aab8ca;
+}
+
+.withdraw-input-shell + .withdraw-limits,
+.withdraw-limits + .withdraw-input-shell,
+.withdraw-input-shell + .withdraw-input-shell {
+    margin-top: 10px;
+}
+
+.withdraw-input-shell:focus-within {
+    border-color: #f0b90b;
+    box-shadow: 0 0 0 2px rgb(240 185 11 / 16%);
+}
+
+.withdraw-input-shell svg {
+    flex: 0 0 16px;
+    width: 16px;
+    height: 16px;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.7;
+}
+
+.withdraw-input-shell input {
+    width: 100%;
+    min-width: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: #f5f5f5;
+    font: inherit;
+    font-size: 13px;
+}
+
+.withdraw-input-shell input::placeholder {
+    color: #a0aec0;
+    opacity: 1;
+}
+
+.withdraw-limits {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    color: #8798af;
+    font-size: 10px;
+    line-height: 15px;
+}
+
+.withdraw-limits strong {
+    color: #e0e6ee;
+    font-weight: 500;
+}
+
+.withdraw-rate,
+.withdraw-instruction {
+    margin: 11px 0 0;
+    color: #8798af;
+    font-size: 10px;
+    line-height: 14px;
+}
+
+.withdraw-rate strong {
+    color: #e0e6ee;
+    font-weight: 500;
+}
+
+.withdraw-instruction {
+    margin-top: 10px;
+}
+
+.withdraw-submit-bar {
+    display: flex;
+    flex: 0 0 86px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 8px 12px;
+    border-top: 1px solid #2d3744;
+    background: #202630;
+}
+
+.receive-summary {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.receive-summary > span {
+    color: #8493a8;
+    font-size: 12px;
+}
+
+.receive-summary > strong {
+    color: #d9e0e9;
+    font-size: 16px;
+    line-height: 20px;
+}
+
+.receive-summary > small {
+    color: #718096;
+    font-size: 11px;
+}
+
+.receive-summary b {
+    color: #cbd5e1;
+    font-weight: 500;
+}
+
+.withdraw-submit {
+    flex: 0 0 110px;
+    height: 40px;
+    border: 0;
+    border-radius: 8px;
+    background: #f0c30b;
+    color: #1e2329;
+    cursor: pointer;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.withdraw-submit:hover {
+    background: #fcd535;
+}
+
+.withdraw-submit:focus-visible,
+.withdraw-preview-dialog button:focus-visible {
+    outline: 2px solid #f0b90b;
+    outline-offset: 2px;
+}
+
+.withdraw-confirm-page .bottom-nav {
+    position: static;
+    min-height: 58px;
+    flex: 0 0 58px;
+    margin-top: 0;
+    padding-top: 4px;
+    padding-bottom: max(5px, env(safe-area-inset-bottom));
+}
+
+.withdraw-preview-dialog {
+    width: min(calc(100% - 32px), 360px);
+    padding: 24px;
+    border: 1px solid #3b4655;
+    border-radius: 12px;
+    background: #252c37;
+    color: #f5f5f5;
+    box-shadow: 0 20px 70px rgb(0 0 0 / 45%);
+}
+
+.withdraw-preview-dialog::backdrop {
+    background: rgb(9 12 17 / 65%);
+    backdrop-filter: blur(2px);
+}
+
+.withdraw-preview-dialog form {
+    position: relative;
+}
+
+.withdraw-dialog-label {
+    margin: 0 0 8px;
+    color: #f0b90b;
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.withdraw-preview-dialog h2 {
+    margin: 0 0 8px;
+    font-size: 20px;
+}
+
+.withdraw-preview-dialog p:not(.withdraw-dialog-label) {
+    margin: 0 0 22px;
+    color: #aab5c4;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.withdraw-preview-dialog button {
+    width: 100%;
+    height: 38px;
+    border: 0;
+    border-radius: 7px;
+    background: #f0b90b;
+    color: #1e2329;
+    cursor: pointer;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+@media (max-width: 480px) {
+    .withdraw-confirm-header {
+        min-height: 52px;
+        padding: 10px 12px 0;
+    }
+
+    .withdraw-confirm-content {
+        padding: 12px 12px 8px;
+    }
+
+    .withdraw-gateway-card {
+        padding-right: 16px;
+        padding-left: 16px;
+    }
+
+    .withdraw-submit-bar {
+        flex-basis: 80px;
+        padding-right: 10px;
+        padding-left: 10px;
+    }
+
+    .withdraw-confirm-page .bottom-nav {
+        min-height: 52px;
+        flex-basis: 52px;
+    }
+}

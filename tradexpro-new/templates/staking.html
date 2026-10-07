@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TradeXPro - Staking</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='staking.css') }}">
+</head>
+<body class="dashboard-page staking-page">
+    <main class="dashboard-shell">
+        <header class="staking-header">
+            <a class="staking-back" href="{{ url_for('dashboard') }}" aria-label="Back to dashboard">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+            </a>
+            <div><p>Earn rewards</p><h1>Staking</h1></div>
+            <a class="staking-help" href="{{ url_for('help_support') }}" aria-label="Help and support">?</a>
+        </header>
+
+        <section class="staking-content">
+            <article class="staking-summary">
+                <span class="staking-summary-label">Total staked</span>
+                <strong>$0.00 <small>USD</small></strong>
+                <span class="staking-summary-note">Start earning on your crypto assets</span>
+                <div class="staking-summary-decoration" aria-hidden="true">◈</div>
+            </article>
+
+            <div class="staking-section-heading">
+                <div><h2>Available plans</h2><p>Choose a plan that suits your goals</p></div>
+                <span class="staking-count">3 plans</span>
+            </div>
+
+            <article class="staking-plan">
+                <div class="staking-plan-top">
+                    <span class="staking-coin coin-usdt">₮</span>
+                    <span class="plan-tag">FLEXIBLE</span>
+                </div>
+                <div class="staking-plan-name"><h3>USDT Flexible</h3><span>USDT</span></div>
+                <div class="staking-apy"><strong>5.2%</strong><span>Estimated annual yield</span></div>
+                <div class="staking-plan-details"><div><span>Lock period</span><strong>Flexible</strong></div><div><span>Minimum stake</span><strong>10 USDT</strong></div><div><span>Rewards</span><strong>Daily</strong></div></div>
+                <button class="staking-action" type="button" data-plan="USDT Flexible">Stake USDT</button>
+            </article>
+
+            <article class="staking-plan">
+                <div class="staking-plan-top">
+                    <span class="staking-coin coin-btc">₿</span>
+                    <span class="plan-tag">30 DAYS</span>
+                </div>
+                <div class="staking-plan-name"><h3>Bitcoin Growth</h3><span>BTC</span></div>
+                <div class="staking-apy"><strong>8.5%</strong><span>Estimated annual yield</span></div>
+                <div class="staking-plan-details"><div><span>Lock period</span><strong>30 days</strong></div><div><span>Minimum stake</span><strong>0.001 BTC</strong></div><div><span>Rewards</span><strong>At maturity</strong></div></div>
+                <button class="staking-action" type="button" data-plan="Bitcoin Growth">Stake BTC</button>
+            </article>
+
+            <article class="staking-plan">
+                <div class="staking-plan-top">
+                    <span class="staking-coin coin-eth">◆</span>
+                    <span class="plan-tag">90 DAYS</span>
+                </div>
+                <div class="staking-plan-name"><h3>Ethereum Lock-up</h3><span>ETH</span></div>
+                <div class="staking-apy"><strong>12.0%</strong><span>Estimated annual yield</span></div>
+                <div class="staking-plan-details"><div><span>Lock period</span><strong>90 days</strong></div><div><span>Minimum stake</span><strong>0.05 ETH</strong></div><div><span>Rewards</span><strong>Weekly</strong></div></div>
+                <button class="staking-action" type="button" data-plan="Ethereum Lock-up">Stake ETH</button>
+            </article>
+            <p class="staking-disclaimer">Illustrative frontend preview. Staking is not connected to a wallet or payment service.</p>
+        </section>
+
+        {% include "_bottom-nav.html" %}
+    </main>
+    <dialog class="staking-dialog" id="staking-dialog">
+        <form method="dialog">
+            <button class="staking-dialog-close" value="cancel" aria-label="Close">×</button>
+            <span class="staking-dialog-icon">◈</span>
+            <h2 id="staking-dialog-title">Staking preview</h2>
+            <p>Staking services are not connected yet. No funds will be moved.</p>
+            <button class="staking-dialog-button" value="cancel">Got it</button>
+        </form>
+    </dialog>
+    <script>
+        const dialog = document.getElementById('staking-dialog');
+        const title = document.getElementById('staking-dialog-title');
+        document.querySelectorAll('[data-plan]').forEach((button) => {
+            button.addEventListener('click', () => {
+                title.textContent = `${button.dataset.plan} preview`;
+                dialog.showModal();
+            });
+        });
+    </script>
+</body>
+</html>

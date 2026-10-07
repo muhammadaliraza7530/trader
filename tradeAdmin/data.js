@@ -33,5 +33,9 @@ window.ADMIN_DATA = {
     { pair: 'ETH / USDT', duration: '1 – 5 min', payout: 82, min: 1, max: 2500, state: 'Enabled' },
     { pair: 'SOL / USDT', duration: '1 – 3 min', payout: 78, min: 5, max: 1000, state: 'Enabled' },
     { pair: 'XRP / USDT', duration: '1 – 5 min', payout: 75, min: 1, max: 1000, state: 'Disabled' }
+  ],
+  banners: [
+    { id: 1, order: 1, title: 'Complete KYC & Unlock Platform Features', subtitle: 'Verify your identity to unlock more ways to trade.', imageUrl: '', ctaText: 'Complete KYC', ctaUrl: '/kyc.html', startsAt: '2026-10-01T00:00', endsAt: '2026-12-31T23:59', active: true },
+    { id: 2, order: 2, title: 'Explore New Staking Plans', subtitle: 'Put eligible assets to work with flexible staking options.', imageUrl: '', ctaText: 'View Plans', ctaUrl: '/staking.html', startsAt: '2026-10-01T00:00', endsAt: '2026-12-31T23:59', active: false }
   ]
 };

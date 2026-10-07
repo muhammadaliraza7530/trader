@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TradeXPro - Wallet</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='wallets.css') }}">
+</head>
+<body class="dashboard-page wallet-page">
+    <main class="dashboard-shell">
+        <div class="dashboard-content wallet-header">
+            <header class="topbar">
+                <div class="brand">
+                    <span class="brand-mark"><img src="{{ url_for('static', filename='logo/logo.png') }}" onerror="if(!this.dataset.retry){this.dataset.retry=1;this.src='/logo/logo.png';}else if(this.dataset.retry==1){this.dataset.retry=2;this.src='/public/logo/logo.png';}" alt="TradeXPro logo"></span>
+                    <span>Trade X Pro</span>
+                </div>
+                <div class="top-actions">
+                    <a class="icon-button" href="{{ url_for('help_support') }}" aria-label="Help and support">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13v-2a8 8 0 0 1 16 0v2M4 13h3v6H5a2 2 0 0 1-2-2v-2a2 2 0 0 1 1-2Zm16 0h-3v6h2a2 2 0 0 0 2-2v-2a2 2 0 0 0-1-2ZM9 20h5"/><circle cx="12" cy="4" r="1"/></svg>
+                    </a>
+                    <button class="icon-button notification-button" type="button" aria-label="Notifications">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 21h4"/></svg>
+                    </button>
+                </div>
+            </header>
+
+            <section class="wallet-overview" aria-label="Wallet balances">
+                <div class="wallet-total">
+                    <p class="wallet-label">Total Balance</p>
+                    <p class="wallet-value">0.00 <small>USD</small></p>
+                    <p class="wallet-conversion">≈ 0.00$</p>
+                </div>
+                <div class="wallet-profit">
+                    <p class="wallet-label">Profit Balance</p>
+                    <p class="wallet-value">0.00 <small>USD</small></p>
+                    <p class="wallet-conversion">USD 0.00$</p>
+                </div>
+            </section>
+        </div>
+
+        <div class="wallet-content">
+            <div class="wallet-actions" aria-label="Wallet actions">
+                <a class="wallet-action is-primary" href="{{ url_for('deposit_methods') }}">Deposit</a>
+                <a class="wallet-action" href="{{ url_for('withdraw_methods') }}">Withdraw</a>
+                <button class="wallet-action" type="button" data-wallet-action="Transfer">Transfer</button>
+            </div>
+
+            <section class="wallet-assets" aria-labelledby="balances-heading">
+                <h1 id="balances-heading">Balances</h1>
+                <div class="wallet-list">
+                    <article class="wallet-row">
+                        <span class="asset-icon asset-usdt" aria-hidden="true">T</span>
+                        <div class="wallet-asset-name"><span>USDT</span><small>TetherUS</small></div>
+                        <div class="wallet-amount"><span>0.000000</span><small>USD 0.00$</small></div>
+                    </article>
+                    <article class="wallet-row">
+                        <span class="asset-icon asset-btc" aria-hidden="true">₿</span>
+                        <div class="wallet-asset-name"><span>BTC</span><small>Bitcoin</small></div>
+                        <div class="wallet-amount"><span>0.000000</span><small>USD 0.00$</small></div>
+                    </article>
+                    <article class="wallet-row">
+                        <span class="asset-icon asset-eth" aria-hidden="true">◆</span>
+                        <div class="wallet-asset-name"><span>ETH</span><small>Ethereum</small></div>
+                        <div class="wallet-amount"><span>0.000000</span><small>USD 0.00$</small></div>
+                    </article>
+                    <article class="wallet-row">
+                        <span class="asset-icon asset-algo" aria-hidden="true">A</span>
+                        <div class="wallet-asset-name"><span>ALGO</span><small>ALGO</small></div>
+                        <div class="wallet-amount"><span>0.000000</span><small>USD 0.00$</small></div>
+                    </article>
+                    <article class="wallet-row">
+                        <span class="asset-icon asset-xrp" aria-hidden="true">×</span>
+                        <div class="wallet-asset-name"><span>XRP</span><small>XRP</small></div>
+                        <div class="wallet-amount"><span>0.000000</span><small>USD 0.00$</small></div>
+                    </article>
+                </div>
+            </section>
+        </div>
+    {% include "_bottom-nav.html" %}
+    </main>
+
+    <dialog class="wallet-dialog" id="wallet-dialog">
+        <form method="dialog">
+            <button class="dialog-close" value="cancel" aria-label="Close">×</button>
+            <p class="dialog-kicker">WALLET</p>
+            <h2 id="wallet-dialog-title">Deposit / Transfer</h2>
+            <p>Wallet actions are available in the frontend preview only.</p>
+            <button class="dialog-confirm" value="cancel">Got it</button>
+        </form>
+    </dialog>
+
+    <script>
+        const walletDialog = document.getElementById('wallet-dialog');
+        const walletDialogTitle = document.getElementById('wallet-dialog-title');
+
+        document.querySelectorAll('[data-wallet-action="Transfer"]').forEach((button) => {
+            button.addEventListener('click', () => {
+                walletDialogTitle.textContent = button.dataset.walletAction;
+                walletDialog.showModal();
+            });
+        });
+    </script>
+</body>
+</html>

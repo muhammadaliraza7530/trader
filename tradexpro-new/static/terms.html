@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0b0e11">
+    <title>Terms &amp; Conditions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="/static/config.js"></script>
+    <script defer>
+        document.addEventListener("DOMContentLoaded", () => {
+            const brand = window.SITE_CONFIG?.SITE_NAME || "TradeXPro";
+            document.title = `${brand} - Terms & Conditions`;
+            document.querySelectorAll("[data-site-name]").forEach((element) => {
+                element.textContent = brand;
+            });
+        });
+    </script>
+</head>
+<body class="min-h-screen bg-[#0B0E11] px-4 py-8 text-[#EAECEF] antialiased">
+    <main class="mx-auto w-full max-w-xl rounded-2xl border border-gray-800 bg-[#181A20] p-6 shadow-2xl sm:p-8">
+        <a href="/register.html" class="text-sm text-[#F0B90B] hover:text-[#F8D12F]">← Back to registration</a>
+        <h1 class="mt-6 text-2xl font-semibold text-white">Terms &amp; Conditions</h1>
+        <p class="mt-4 text-sm leading-6 text-gray-400">
+            These terms are a placeholder for the <span data-site-name></span> frontend preview. No account is created by accepting them.
+            Replace this content with the approved terms before using the registration form in a live service.
+        </p>
+    </main>
+</body>
+</html>

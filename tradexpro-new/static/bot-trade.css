@@ -1,0 +1,356 @@
+.bot-trade-page {
+    height: 100vh;
+    height: 100svh;
+    overflow: hidden;
+}
+
+.bot-trade-page .dashboard-shell {
+    height: 100vh;
+    height: 100svh;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.bot-trade-page .dashboard-content {
+    flex: 0 0 auto;
+    padding: 14px 12px 0;
+    border-bottom: 1px solid #35404e;
+}
+
+.bot-topbar,
+.bot-title-group {
+    display: flex;
+    align-items: center;
+}
+
+.bot-topbar {
+    justify-content: space-between;
+    height: 36px;
+}
+
+.bot-title-group {
+    gap: 10px;
+}
+
+.back-button {
+    display: grid;
+    width: 24px;
+    height: 28px;
+    place-items: center;
+    color: #d7deea;
+}
+
+.back-button svg {
+    width: 22px;
+    height: 22px;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 2.4;
+}
+
+.back-button:focus-visible {
+    outline: 2px solid #f0b90b;
+    outline-offset: 2px;
+}
+
+.bot-title-group h1 {
+    margin: 0;
+    color: #f5f5f5;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 24px;
+}
+
+.bot-balances {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    min-height: 96px;
+    padding: 11px 0 10px;
+}
+
+.bot-balance p {
+    margin: 0;
+}
+
+.bot-balance-right {
+    text-align: right;
+}
+
+.bot-balance-label {
+    font-size: 11px;
+    line-height: 16px;
+}
+
+.bot-balance-value {
+    margin-top: 2px !important;
+    font-size: 23px;
+    font-weight: 700;
+    line-height: 27px;
+}
+
+.bot-balance-conversion {
+    margin-top: 2px !important;
+    color: #718096;
+    font-size: 9px;
+    line-height: 13px;
+}
+
+.bot-stage {
+    display: flex;
+    flex: 0 0 228px;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 8px;
+}
+
+.trading-illustration {
+    position: relative;
+    width: 180px;
+    height: 156px;
+    flex: 0 0 156px;
+    perspective: 360px;
+}
+
+.trade-platform {
+    position: absolute;
+    border-radius: 5px;
+    transform: rotate(-28deg) skew(-8deg);
+}
+
+.platform-back {
+    top: 56px;
+    left: 54px;
+    width: 94px;
+    height: 53px;
+    background: #e5e7eb;
+    box-shadow: 5px 8px 0 #8f969e;
+}
+
+.platform-front {
+    top: 76px;
+    left: 39px;
+    width: 98px;
+    height: 56px;
+    border: 6px solid #f8fafc;
+    background: #303643;
+    box-shadow: 0 6px 0 #bfc4cb;
+}
+
+.trade-device {
+    position: absolute;
+    z-index: 2;
+    top: 64px;
+    left: 37px;
+    width: 107px;
+    height: 59px;
+    padding: 5px;
+    border: 2px solid #f8fafc;
+    border-radius: 6px;
+    background: #394150;
+    box-shadow: 0 5px 0 #b8bec7;
+    transform: rotate(-28deg) skew(-8deg);
+}
+
+.device-screen {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 2px;
+    background: #202630;
+}
+
+.screen-header,
+.screen-value {
+    position: absolute;
+    left: 6px;
+    height: 3px;
+    border-radius: 2px;
+    background: #8994a3;
+}
+
+.screen-header {
+    top: 6px;
+    width: 22px;
+}
+
+.screen-value {
+    top: 13px;
+    width: 36px;
+    background: #f0b90b;
+}
+
+.screen-chart {
+    position: absolute;
+    right: 6px;
+    bottom: 6px;
+    left: 6px;
+    display: flex;
+    height: 16px;
+    align-items: flex-end;
+    gap: 4px;
+}
+
+.screen-chart i {
+    width: 8px;
+    border-radius: 2px 2px 0 0;
+    background: #f0b90b;
+}
+
+.screen-chart i:nth-child(1) { height: 6px; }
+.screen-chart i:nth-child(2) { height: 10px; }
+.screen-chart i:nth-child(3) { height: 7px; }
+.screen-chart i:nth-child(4) { height: 13px; }
+.screen-chart i:nth-child(5) { height: 10px; }
+.screen-chart i:nth-child(6) { height: 16px; }
+
+.trade-coin {
+    position: absolute;
+    z-index: 3;
+    top: 48px;
+    left: 39px;
+    display: grid;
+    width: 40px;
+    height: 28px;
+    place-items: center;
+    border: 3px solid #ffda27;
+    border-radius: 50%;
+    background: #f5bd00;
+    box-shadow: 0 4px 0 #d99b00;
+    color: #fff7ce;
+    font-size: 16px;
+    font-weight: 700;
+    transform: rotate(-10deg);
+}
+
+.trade-token {
+    position: absolute;
+    width: 12px;
+    height: 7px;
+    background: #aeb5bf;
+    clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+}
+
+.token-back {
+    top: 19px;
+    left: 98px;
+}
+
+.token-front {
+    right: 24px;
+    bottom: 21px;
+    width: 16px;
+    height: 9px;
+}
+
+.trade-spark {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: #d8dde4;
+    transform: rotate(45deg);
+}
+
+.spark-one { top: 19px; left: 125px; }
+.spark-two { bottom: 15px; left: 73px; }
+.spark-three { top: 76px; right: 10px; width: 8px; height: 8px; }
+
+.start-trading-button {
+    width: 130px;
+    height: 30px;
+    margin-top: 8px;
+    border: 0;
+    border-radius: 18px;
+    background: #f0b90b;
+    color: #202630;
+    cursor: pointer;
+    font: inherit;
+    font-size: 12px;
+    transition: background-color 150ms ease, transform 150ms ease;
+}
+
+.start-trading-button:hover {
+    background: #fcd535;
+}
+
+.start-trading-button:active {
+    transform: scale(.98);
+}
+
+.start-trading-button.is-running {
+    background: #0db887;
+    color: #fff;
+}
+
+.start-trading-button:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 3px;
+}
+
+.trade-history {
+    display: flex;
+    min-height: 166px;
+    flex: 0 0 166px;
+    flex-direction: column;
+    margin: 0 8px 10px;
+    background: #252c37;
+}
+
+.trade-history h2 {
+    display: flex;
+    min-height: 38px;
+    align-items: center;
+    margin: 0;
+    padding: 0 8px;
+    border-bottom: 1px solid #404854;
+    color: #f5f5f5;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.history-empty {
+    flex: 1;
+}
+
+.bot-trade-page .bottom-nav {
+    position: static;
+    min-height: 58px;
+    flex: 0 0 58px;
+    margin-top: auto;
+    padding-top: 4px;
+    padding-bottom: max(5px, env(safe-area-inset-bottom));
+}
+
+@media (max-height: 620px) {
+    .bot-stage {
+        flex-basis: 196px;
+    }
+
+    .trading-illustration {
+        transform: scale(.86);
+        transform-origin: top center;
+    }
+
+    .start-trading-button {
+        margin-top: 0;
+    }
+
+    .trade-history {
+        min-height: 120px;
+        flex-basis: 120px;
+    }
+}
+
+@media (max-width: 360px) {
+    .bot-trade-page .dashboard-content {
+        padding-right: 10px;
+        padding-left: 10px;
+    }
+
+    .bot-balance-label {
+        font-size: 10px;
+    }
+}

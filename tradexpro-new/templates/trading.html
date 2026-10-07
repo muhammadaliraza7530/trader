@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TradeXPro - {{ symbol }} Trading</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='trading.css') }}">
+</head>
+<body class="dashboard-page trading-page" data-symbol="{{ symbol }}" data-name="{{ asset.name }}" data-start-price="{{ asset.price }}">
+    <main class="dashboard-shell">
+        <header class="trading-header">
+            <div class="brand">
+                <span class="brand-mark"><img src="{{ url_for('static', filename='logo/logo.png') }}" onerror="if(!this.dataset.retry){this.dataset.retry=1;this.src='/logo/logo.png';}else if(this.dataset.retry==1){this.dataset.retry=2;this.src='/public/logo/logo.png';}" alt="TradeXPro logo"></span>
+                <span>Trade X Pro</span>
+            </div>
+            <div class="trading-balance" aria-label="Available balance: zero dollars">
+                <span class="balance-coin" aria-hidden="true">◒</span>
+                <span>$0.00</span>
+            </div>
+        </header>
+
+        <div class="chart-toolbar" aria-label="Chart controls">
+            <span class="pair-search" aria-label="Selected trading pair">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m16 16 5 5"/></svg>
+                <strong>{{ symbol }}USDT</strong>
+            </span>
+            <button class="toolbar-icon add-pair" type="button" aria-label="Add pair">+</button>
+            <div class="timeframes" role="group" aria-label="Chart timeframe">
+                <button class="timeframe is-selected" type="button" data-interval="1">1m</button>
+                <button class="timeframe" type="button" data-interval="30">30m</button>
+                <button class="timeframe" type="button" data-interval="60">1h</button>
+                <button class="toolbar-icon timeframe-more" type="button" aria-label="More timeframes">⌄</button>
+            </div>
+            <span class="toolbar-divider"></span>
+            <button class="toolbar-icon" type="button" aria-label="Indicators">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 17h16M9 4v6m6 4v6"/></svg>
+            </button>
+            <button class="toolbar-icon is-selected" type="button" aria-label="Candlestick chart">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3v18M12 5v14M18 2v20M3 8h6v7H3zM9 9h6v6H9zM15 6h6v8h-6z"/></svg>
+            </button>
+            <button class="toolbar-icon" type="button" aria-label="Chart type">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 17 5-6 4 3 8-9M16 5h4v4"/></svg>
+            </button>
+            <span class="toolbar-divider"></span>
+            <button class="toolbar-icon" type="button" aria-label="Chart settings">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V9m5 10V5m5 14v-7m5 7V3M2 9h4m1-4h4m2 7h4m1-9h4"/></svg>
+            </button>
+        </div>
+
+        <section class="chart-panel" aria-label="{{ symbol }} price chart">
+            <div class="chart-caption">
+                <div class="chart-asset-heading">
+                    <span class="chart-asset-icon" aria-hidden="true">{{ '◆' if symbol == 'ETH' else symbol[0] }}</span>
+                    <span>{{ asset.name }}</span>
+                    <span class="market-status-dot" aria-label="Market open"></span>
+                </div>
+                <div class="ohlc-readout" id="ohlc-readout"></div>
+                <div class="volume-readout">Vol · {{ symbol }} <span id="volume-readout">--</span></div>
+            </div>
+            <div class="chart-canvas" id="price-chart"></div>
+            <div class="chart-current-price" id="current-price"></div>
+            <div class="chart-hover-tools" role="group" aria-label="Chart navigation">
+                <button type="button" id="chart-zoom-out" aria-label="Zoom out">−</button>
+                <button type="button" id="chart-zoom-in" aria-label="Zoom in">+</button>
+                <button type="button" id="chart-pan-left" aria-label="Scroll chart left">‹</button>
+                <button type="button" id="chart-pan-right" aria-label="Scroll chart right">›</button>
+                <button type="button" id="chart-reset" aria-label="Reset chart view">↻</button>
+            </div>
+        </section>
+
+        <section class="trade-controls" aria-label="Trade settings">
+            <div class="control-labels">
+                <label for="trade-duration">Select Timer</label>
+                <label for="trade-amount">Enter Amount</label>
+            </div>
+            <div class="trade-fields">
+                <select id="trade-duration" aria-label="Trade duration">
+                    <option value="">Choose a time</option>
+                    <option value="1">1 minute</option>
+                    <option value="5">5 minutes</option>
+                    <option value="15">15 minutes</option>
+                    <option value="30">30 minutes</option>
+                    <option value="60">1 hour</option>
+                </select>
+                <div class="amount-stepper">
+                    <button type="button" id="decrease-amount" aria-label="Decrease amount">−</button>
+                    <input id="trade-amount" type="number" min="0" step="1" value="0" aria-label="Trade amount in USD">
+                    <button type="button" id="increase-amount" aria-label="Increase amount">+</button>
+                </div>
+            </div>
+            <div class="direction-buttons">
+                <button type="button" class="direction-button direction-down" data-direction="Down">Down <span aria-hidden="true">↓</span></button>
+                <button type="button" class="direction-button direction-up" data-direction="Up">Up <span aria-hidden="true">↑</span></button>
+            </div>
+            <p class="trade-feedback" id="trade-feedback" aria-live="polite"></p>
+        </section>
+    {% include "_bottom-nav.html" %}
+    </main>
+
+    <dialog class="trade-preview-dialog" id="trade-preview-dialog">
+        <form method="dialog">
+            <p class="trade-dialog-label">DEMO PREVIEW</p>
+            <h2 id="trade-dialog-title">Trade preview</h2>
+            <p>Live prices and order execution are not connected.</p>
+            <button value="cancel">Close</button>
+        </form>
+    </dialog>
+
+    <script src="https://unpkg.com/lightweight-charts@4.2.2/dist/lightweight-charts.standalone.production.js"></script>
+    <script>
+        const symbol = document.body.dataset.symbol;
+        const startPrice = Number(document.body.dataset.startPrice);
+        const chartElement = document.getElementById('price-chart');
+        const chart = LightweightCharts.createChart(chartElement, {
+            width: chartElement.clientWidth,
+            height: chartElement.clientHeight,
+            layout: { background: { color: '#1e2329' }, textColor: '#9ba9bd', fontFamily: 'Inter, sans-serif', fontSize: 10 },
+            grid: { vertLines: { color: '#2b333f' }, horzLines: { color: '#2b333f' } },
+            rightPriceScale: { borderColor: '#394351', scaleMargins: { top: 0.08, bottom: 0.2 } },
+            timeScale: { borderColor: '#394351', timeVisible: true, secondsVisible: false, rightOffset: 2, barSpacing: 5 },
+            crosshair: { mode: LightweightCharts.CrosshairMode.Normal },
+            handleScroll: true,
+            handleScale: true,
+        });
+
+        const candles = chart.addCandlestickSeries({
+            upColor: '#0db887',
+            downColor: '#f04452',
+            borderVisible: false,
+            wickUpColor: '#0db887',
+            wickDownColor: '#f04452',
+            priceLineColor: '#f04452',
+            priceLineWidth: 1,
+        });
+        const volume = chart.addHistogramSeries({
+            priceScaleId: 'volume',
+            priceFormat: { type: 'volume' },
+            lastValueVisible: false,
+            priceLineVisible: false,
+            base: 0,
+        });
+        chart.priceScale('volume').applyOptions({ scaleMargins: { top: 0.82, bottom: 0 } });
+
+        let selectedInterval = 1;
+        const candleCount = 180;
+        const initialVisibleCandles = 72;
+        let chartData = { bars: [], volumeBars: [] };
+        function generateCandles(interval) {
+            const now = Math.floor(Date.now() / 1000);
+            const bars = [];
+            const volumeBars = [];
+            let previousClose = startPrice * (0.996 + Math.random() * 0.008);
+
+            for (let index = 0; index < candleCount; index += 1) {
+                const open = previousClose;
+                const volatility = Math.max(startPrice * 0.00055, 0.00001);
+                const close = Math.max(0.00001, open + (Math.random() - 0.49) * volatility * 2.8);
+                const high = Math.max(open, close) + Math.random() * volatility;
+                const low = Math.max(0.00001, Math.min(open, close) - Math.random() * volatility);
+                const time = now - (candleCount - 1 - index) * interval * 60;
+                bars.push({ time, open, high, low, close });
+                volumeBars.push({ time, value: 4 + Math.random() * 18, color: close >= open ? 'rgba(13,184,135,.65)' : 'rgba(240,68,82,.65)' });
+                previousClose = close;
+            }
+
+            return { bars, volumeBars };
+        }
+
+        let latestCandle;
+        let latestVolumeValue = 0;
+        const ohlcReadout = document.getElementById('ohlc-readout');
+        const volumeReadout = document.getElementById('volume-readout');
+        const currentPriceLabel = document.getElementById('current-price');
+        const formatPrice = (price) => price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 5 });
+
+        function updateHoverReadout(candle, volumeValue) {
+            if (!candle) return;
+            const change = candle.close - candle.open;
+            ohlcReadout.classList.toggle('is-up', change >= 0);
+            ohlcReadout.classList.toggle('is-down', change < 0);
+            ohlcReadout.innerHTML = `O ${formatPrice(candle.open)} H ${formatPrice(candle.high)} L ${formatPrice(candle.low)} C ${formatPrice(candle.close)} <span class="ohlc-change">${change >= 0 ? '+' : ''}${formatPrice(change)}</span>`;
+            volumeReadout.textContent = Math.round(volumeValue || 0);
+
+            const priceY = chart.priceScale('right').priceToCoordinate(latestCandle.close);
+            if (priceY !== null) currentPriceLabel.style.top = `${Math.max(0, Math.min(chartElement.clientHeight - 20, priceY - 9))}px`;
+            currentPriceLabel.textContent = formatPrice(latestCandle.close);
+        }
+
+        function drawChart(interval = selectedInterval) {
+            selectedInterval = interval;
+            chartData = generateCandles(interval);
+            candles.setData(chartData.bars);
+            volume.setData(chartData.volumeBars);
+            const lastIndex = chartData.bars.length - 1;
+            chart.timeScale().setVisibleLogicalRange({
+                from: Math.max(0, lastIndex - initialVisibleCandles + 1),
+                to: lastIndex,
+            });
+            latestCandle = chartData.bars[lastIndex];
+            latestVolumeValue = chartData.volumeBars[lastIndex].value;
+            updateHoverReadout(latestCandle, latestVolumeValue);
+        }
+
+        drawChart();
+        chart.subscribeCrosshairMove((param) => {
+            const hoveredCandle = param.time && param.seriesData ? param.seriesData.get(candles) : null;
+            const hoveredVolume = param.time && param.seriesData ? param.seriesData.get(volume) : null;
+            updateHoverReadout(hoveredCandle || latestCandle, hoveredVolume?.value ?? latestVolumeValue);
+        });
+
+        new ResizeObserver(() => {
+            chart.applyOptions({ width: chartElement.clientWidth, height: chartElement.clientHeight });
+            updateHoverReadout(latestCandle, latestVolumeValue);
+        }).observe(chartElement);
+
+        function zoomVisibleRange(factor) {
+            const range = chart.timeScale().getVisibleLogicalRange();
+            if (!range) return;
+
+            const center = (range.from + range.to) / 2;
+            const width = Math.min(chartData.bars.length - 1, Math.max(12, (range.to - range.from) * factor));
+            let from = center - width / 2;
+            let to = center + width / 2;
+
+            if (from < 0) {
+                to -= from;
+                from = 0;
+            }
+            if (to > chartData.bars.length - 1) {
+                from -= to - (chartData.bars.length - 1);
+                to = chartData.bars.length - 1;
+            }
+
+            chart.timeScale().setVisibleLogicalRange({ from: Math.max(0, from), to });
+        }
+
+        function panVisibleRange(offset) {
+            const range = chart.timeScale().getVisibleLogicalRange();
+            if (!range) return;
+
+            const width = range.to - range.from;
+            const maxFrom = Math.max(0, chartData.bars.length - 1 - width);
+            const from = Math.max(0, Math.min(maxFrom, range.from + offset));
+            chart.timeScale().setVisibleLogicalRange({ from, to: from + width });
+        }
+
+        document.getElementById('chart-zoom-in').addEventListener('click', () => {
+            zoomVisibleRange(0.8);
+        });
+        document.getElementById('chart-zoom-out').addEventListener('click', () => {
+            zoomVisibleRange(1.25);
+        });
+        document.getElementById('chart-pan-left').addEventListener('click', () => panVisibleRange(-12));
+        document.getElementById('chart-pan-right').addEventListener('click', () => panVisibleRange(12));
+        document.getElementById('chart-reset').addEventListener('click', () => {
+            const lastIndex = chartData.bars.length - 1;
+            chart.timeScale().setVisibleLogicalRange({
+                from: Math.max(0, lastIndex - initialVisibleCandles + 1),
+                to: lastIndex,
+            });
+        });
+
+        document.querySelectorAll('[data-interval]').forEach((button) => {
+            button.addEventListener('click', () => {
+                document.querySelectorAll('[data-interval]').forEach((item) => item.classList.toggle('is-selected', item === button));
+                drawChart(Number(button.dataset.interval));
+            });
+        });
+
+        const amountInput = document.getElementById('trade-amount');
+        document.getElementById('decrease-amount').addEventListener('click', () => {
+            amountInput.value = Math.max(0, Number(amountInput.value || 0) - 1);
+        });
+        document.getElementById('increase-amount').addEventListener('click', () => {
+            amountInput.value = Number(amountInput.value || 0) + 1;
+        });
+
+        const tradeDialog = document.getElementById('trade-preview-dialog');
+        document.querySelectorAll('[data-direction]').forEach((button) => {
+            button.addEventListener('click', () => {
+                document.getElementById('trade-dialog-title').textContent = `${button.dataset.direction} ${symbol} preview`;
+                tradeDialog.showModal();
+            });
+        });
+    </script>
+</body>
+</html>

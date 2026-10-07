@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TradeXPro - Markets</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+</head>
+<body class="dashboard-page markets-screen">
+    <main class="dashboard-shell">
+        <div class="dashboard-content">
+            <header class="topbar">
+                <div class="brand">
+                    <span class="brand-mark"><img src="{{ url_for('static', filename='logo/logo.png') }}" onerror="if(!this.dataset.retry){this.dataset.retry=1;this.src='/logo/logo.png';}else if(this.dataset.retry==1){this.dataset.retry=2;this.src='/public/logo/logo.png';}" alt="TradeXPro logo"></span>
+                    <span>Trade X Pro</span>
+                </div>
+                <div class="top-actions">
+                    <a class="icon-button" href="{{ url_for('help_support') }}" aria-label="Help and support">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13v-2a8 8 0 0 1 16 0v2M4 13h3v6H5a2 2 0 0 1-2-2v-2a2 2 0 0 1 1-2Zm16 0h-3v6h2a2 2 0 0 0 2-2v-2a2 2 0 0 0-1-2ZM9 20h5"/><circle cx="12" cy="4" r="1"/></svg>
+                    </a>
+                    <button class="icon-button notification-button" type="button" aria-label="Notifications">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 21h4"/></svg>
+                    </button>
+                </div>
+            </header>
+        </div>
+
+        <section class="markets" aria-label="Cryptocurrency markets">
+            <div class="market-tabs" role="tablist" aria-label="Market categories">
+                <button class="market-tab is-active" type="button" role="tab" aria-selected="true" data-market-tab="all">All Coins</button>
+                <button class="market-tab" type="button" role="tab" aria-selected="false" data-market-tab="gainers">Gainers</button>
+                <button class="market-tab" type="button" role="tab" aria-selected="false" data-market-tab="losers">Losers</button>
+            </div>
+
+            <div class="market-head" aria-hidden="true">
+                <span>Name</span>
+                <span>Last Price</span>
+                <span>24h chg%</span>
+            </div>
+
+            <div class="market-list">
+                <article class="market-row" data-category="all gainers" data-symbol="USDT" role="link" tabindex="0" aria-label="Trade USDT">
+                    <div class="asset-name"><span>USDT <small>/USDT</small></span><small class="asset-description">TetherUS /TetherUS</small></div>
+                    <div class="asset-price"><span>1.000202</span><small>1.0001$</small></div>
+                    <span class="change-pill">0.0100%</span>
+                </article>
+                <article class="market-row" data-category="all gainers" data-symbol="BTC" role="link" tabindex="0" aria-label="Trade BTC">
+                    <div class="asset-name"><span>BTC <small>/USDT</small> <b class="hot-mark">&#128293;</b></span><small class="asset-description">Bitcoin /TetherUS</small></div>
+                    <div class="asset-price"><span>79974.010042</span><small>79974.0100$</small></div>
+                    <span class="change-pill">0.2300%</span>
+                </article>
+                <article class="market-row" data-category="all gainers" data-symbol="ETH" role="link" tabindex="0" aria-label="Trade ETH">
+                    <div class="asset-name"><span>ETH <small>/USDT</small> <b class="hot-mark">&#128293;</b></span><small class="asset-description">Ethereum /TetherUS</small></div>
+                    <div class="asset-price"><span>2481.669953</span><small>2481.6700$</small></div>
+                    <span class="change-pill">1.0500%</span>
+                </article>
+                <article class="market-row" data-category="all gainers" data-symbol="ALGO" role="link" tabindex="0" aria-label="Trade ALGO">
+                    <div class="asset-name"><span>ALGO <small>/USDT</small></span><small class="asset-description">ALGO /TetherUS</small></div>
+                    <div class="asset-price"><span>0.094953</span><small>0.0950$</small></div>
+                    <span class="change-pill">4.0500%</span>
+                </article>
+                <article class="market-row" data-category="all gainers" data-symbol="XRP" role="link" tabindex="0" aria-label="Trade XRP">
+                    <div class="asset-name"><span>XRP <small>/USDT</small></span><small class="asset-description">XRP /TetherUS</small></div>
+                    <div class="asset-price"><span>1.418742</span><small>1.4187$</small></div>
+                    <span class="change-pill">1.0500%</span>
+                </article>
+                <article class="market-row" data-category="all gainers" data-symbol="ADA" role="link" tabindex="0" aria-label="Trade ADA">
+                    <div class="asset-name"><span>ADA <small>/USDT</small></span><small class="asset-description">Cardano /TetherUS</small></div>
+                    <div class="asset-price"><span>0.220942</span><small>0.2209$</small></div>
+                    <span class="change-pill">3.0800%</span>
+                </article>
+                <article class="market-row" data-category="all losers" data-symbol="MATIC" role="link" tabindex="0" aria-label="Trade MATIC">
+                    <div class="asset-name"><span>MATIC <small>/USDT</small></span><small class="asset-description">Polygon /TetherUS</small></div>
+                    <div class="asset-price"><span>0.379442</span><small>0.3794$</small></div>
+                    <span class="change-pill is-negative">-0.2900%</span>
+                </article>
+                <article class="market-row" data-category="all gainers" data-symbol="DOGE" role="link" tabindex="0" aria-label="Trade DOGE">
+                    <div class="asset-name"><span>DOGE <small>/USDT</small></span><small class="asset-description">Dogecoin /TetherUS</small></div>
+                    <div class="asset-price"><span>0.091133</span><small>0.0911$</small></div>
+                    <span class="change-pill">7.2500%</span>
+                </article>
+            </div>
+        </section>
+    {% include "_bottom-nav.html" %}
+    </main>
+    <script>
+        const marketTabs = document.querySelectorAll('[data-market-tab]');
+        const marketRows = document.querySelectorAll('.market-row');
+
+        marketRows.forEach((row) => {
+            const openTrade = () => window.location.assign(`/trading/${row.dataset.symbol}`);
+            row.addEventListener('click', openTrade);
+            row.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    openTrade();
+                }
+            });
+        });
+
+        marketTabs.forEach((tab) => {
+            tab.addEventListener('click', () => {
+                marketTabs.forEach((item) => {
+                    const selected = item === tab;
+                    item.classList.toggle('is-active', selected);
+                    item.setAttribute('aria-selected', String(selected));
+                });
+
+                marketRows.forEach((row) => {
+                    row.hidden = !row.dataset.category.split(' ').includes(tab.dataset.marketTab);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

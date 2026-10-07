@@ -9,6 +9,7 @@
     users: 'User management',
     kyc: 'KYC verification',
     transactions: 'Transactions',
+    banners: 'Promotional banners',
     staking: 'Staking plans',
     binary: 'Binary trading',
     settings: 'System settings'
@@ -18,6 +19,16 @@
   let userQuery = '';
   let selectedKycUid = null;
   let toastTimer;
+  const bannerStorageKey = 'tradeAdmin.banners';
+  const storedBanners = localStorageSafeGet(bannerStorageKey);
+  if (storedBanners) {
+    try {
+      const parsedBanners = JSON.parse(storedBanners);
+      if (Array.isArray(parsedBanners)) data.banners = parsedBanners;
+    } catch (error) {
+      data.banners = data.banners || [];
+    }
+  }
 
   const escapeHtml = (value) => String(value ?? '').replace(/[&<>"']/g, (char) => ({
     '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
@@ -72,6 +83,7 @@
   function render() {
     currentPage = document.body.dataset.page || 'dashboard';
     if (!pageTitles[currentPage]) currentPage = 'dashboard';
+    ensureBannerNav();
     document.querySelectorAll('.nav-link').forEach((link) => {
       const active = link.dataset.page === currentPage;
       link.classList.toggle('active', active);
@@ -84,6 +96,7 @@
       users: renderUsers,
       kyc: renderKyc,
       transactions: renderTransactions,
+      banners: renderBanners,
       staking: renderStaking,
       binary: renderBinary,
       settings: renderSettings
@@ -93,6 +106,111 @@
     bindPageEvents();
     document.getElementById('sidebar').classList.remove('sidebar-open');
     document.getElementById('sidebar-backdrop').classList.remove('visible');
+  }
+
+  function ensureBannerNav() {
+    const nav = document.getElementById('main-nav');
+    if (!nav || nav.querySelector('[data-page="banners"]')) return;
+    const transactionLink = nav.querySelector('[data-page="transactions"]');
+    transactionLink?.insertAdjacentHTML('afterend', '<a class="nav-link" data-page="banners" href="banners.html"><span class="nav-icon">▧</span><span>Promotional banners</span></a>');
+  }
+
+  function renderBanners() {
+    const banners = [...data.banners].sort((left, right) => left.order - right.order || left.id - right.id);
+    const rows = banners.map((banner) => `
+      <tr>
+        <td><span class="banner-order">${escapeHtml(String(banner.order))}</span></td>
+        <td><span class="banner-thumbnail">${banner.imageUrl ? `<img src="${escapeHtml(banner.imageUrl)}" alt="" onerror="this.hidden=true">` : '<span>✦</span>'}</span></td>
+        <td><span class="banner-title-cell"><strong>${escapeHtml(banner.title)}</strong><small>${escapeHtml(banner.subtitle)}</small></span></td>
+        <td><span class="banner-route"><strong>${escapeHtml(banner.ctaText)}</strong><small>${escapeHtml(banner.ctaUrl)}</small></span></td>
+        <td><span class="banner-date-range">${escapeHtml(formatBannerDate(banner.startsAt))}<small>to ${escapeHtml(formatBannerDate(banner.endsAt))}</small></span></td>
+        <td>${statusBadge(banner.active ? 'Active' : 'Inactive')}</td>
+        <td><div class="banner-row-actions"><button class="button button-quiet" data-banner-edit="${banner.id}">Edit</button><button class="button ${banner.active ? 'button-warning-quiet' : 'button-success-quiet'}" data-banner-toggle="${banner.id}">${banner.active ? 'Deactivate' : 'Activate'}</button><button class="button button-danger-quiet" data-banner-delete="${banner.id}">Delete</button></div></td>
+      </tr>`).join('');
+    const activeCount = banners.filter((banner) => banner.active).length;
+    return `${pageHeading('Promotional banners', 'Schedule and manage campaigns displayed on the customer home screen.', '<button class="button button-primary" data-banner-create>＋ <span>Add banner</span></button>')}
+      <section class="panel banner-panel">
+        <div class="panel-header panel-header-wide"><div><h2>Home page promotions <span class="count-chip">${banners.length}</span></h2><p>${activeCount} active · ${banners.length - activeCount} inactive</p></div><span class="last-saved"><i></i> Saved in this browser</span></div>
+        <div class="table-wrap banner-table-wrap"><table class="banner-table"><thead><tr><th>Display order</th><th>Image</th><th>Title &amp; subtitle</th><th>CTA link</th><th>Date range</th><th>Status</th><th>Actions</th></tr></thead><tbody>${rows || '<tr><td colspan="7" class="empty-cell">No banners yet. Add a promotion to get started.</td></tr>'}</tbody></table></div>
+      </section>`;
+  }
+
+  function formatBannerDate(value) {
+    const date = new Date(value);
+    return Number.isNaN(date.getTime()) ? 'Not set' : date.toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' });
+  }
+
+  function persistBanners() {
+    try {
+      localStorage.setItem(bannerStorageKey, JSON.stringify(data.banners));
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  function openBannerForm(id = null) {
+    const banner = data.banners.find((item) => item.id === Number(id));
+    const editing = Boolean(banner);
+    const now = Date.now();
+    const offset = new Date().getTimezoneOffset() * 60000;
+    const defaultStart = new Date(now - offset).toISOString().slice(0, 16);
+    const defaultEnd = new Date(now + 30 * 86400000 - offset).toISOString().slice(0, 16);
+    showModal(`<div class="modal-header"><div><span class="eyebrow">HOME PAGE CONTENT</span><h2>${editing ? 'Edit promotional banner' : 'Add promotional banner'}</h2></div><button class="modal-close" data-modal-close aria-label="Close">×</button></div>
+      <form id="banner-form" class="settings-form modal-form banner-form">
+        <label class="field-label">Banner title<input name="title" maxlength="90" value="${escapeHtml(banner?.title || '')}" placeholder="e.g. Complete KYC & unlock features" required></label>
+        <label class="field-label">Subtitle<input name="subtitle" maxlength="140" value="${escapeHtml(banner?.subtitle || '')}" placeholder="Short supporting message" required></label>
+        <label class="field-label">Image URL<input name="imageUrl" value="${escapeHtml(banner?.imageUrl || '')}" placeholder="https://example.com/banner.png"><small>Use a hosted image URL or upload an image below.</small></label>
+        <label class="field-label">Upload image<input name="imageFile" type="file" accept="image/*"><small>Stored in this browser; maximum file size is 700 KB.</small></label>
+        <div class="form-two-col"><label class="field-label">CTA button text<input name="ctaText" maxlength="30" value="${escapeHtml(banner?.ctaText || '')}" placeholder="e.g. Complete KYC" required></label><label class="field-label">CTA destination<input name="ctaUrl" value="${escapeHtml(banner?.ctaUrl || '')}" placeholder="/kyc.html" required></label></div>
+        <div class="form-two-col"><label class="field-label">Start date &amp; time<input name="startsAt" type="datetime-local" value="${escapeHtml(banner?.startsAt || defaultStart)}" required></label><label class="field-label">End date &amp; time<input name="endsAt" type="datetime-local" value="${escapeHtml(banner?.endsAt || defaultEnd)}" required></label></div>
+        <div class="form-two-col"><label class="field-label">Display order<input name="order" type="number" min="1" step="1" value="${escapeHtml(String(banner?.order ?? data.banners.length + 1))}" required></label><label class="switch-row banner-active-toggle"><span><strong>Active banner</strong><small>Show this campaign to customers</small></span><input type="checkbox" name="active" ${banner?.active !== false ? 'checked' : ''}><i></i></label></div>
+        <div class="modal-actions"><button type="button" class="button button-quiet" data-modal-close>Cancel</button><button type="submit" class="button button-primary">${editing ? 'Save banner' : 'Create banner'}</button></div>
+      </form>`);
+    const form = document.getElementById('banner-form');
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const fields = new FormData(form);
+      const startsAt = String(fields.get('startsAt'));
+      const endsAt = String(fields.get('endsAt'));
+      const order = Number(fields.get('order'));
+      const ctaUrl = String(fields.get('ctaUrl')).trim();
+      if (new Date(startsAt) >= new Date(endsAt)) return showToast('End date must be after the start date.', 'error');
+      if (!Number.isInteger(order) || order < 1) return showToast('Display order must be a positive whole number.', 'error');
+      if (!/^(\/|https?:\/\/)/i.test(ctaUrl)) return showToast('CTA destination must be a local route or HTTP(S) URL.', 'error');
+      const file = fields.get('imageFile');
+      if (file.size > 700 * 1024) return showToast('Choose an image smaller than 700 KB.', 'error');
+      const saveBanner = (imageUrl) => {
+        const values = {
+          title: String(fields.get('title')).trim(), subtitle: String(fields.get('subtitle')).trim(), imageUrl,
+          ctaText: String(fields.get('ctaText')).trim(), ctaUrl, startsAt, endsAt, order,
+          active: form.elements.active.checked
+        };
+        if (editing) Object.assign(banner, values);
+        else data.banners.push({ ...values, id: Date.now() });
+        const saved = persistBanners();
+        closeModal();
+        render();
+        showToast(saved ? `Banner ${editing ? 'updated' : 'created'}.` : 'Banner changed, but browser storage is unavailable.', saved ? 'success' : 'error');
+      };
+      if (file.size) {
+        if (!file.type.startsWith('image/')) return showToast('Choose a valid image file.', 'error');
+        const reader = new FileReader();
+        reader.onload = () => saveBanner(String(reader.result));
+        reader.onerror = () => showToast('Could not read the selected image.', 'error');
+        reader.readAsDataURL(file);
+      } else {
+        const imageUrl = String(fields.get('imageUrl')).trim();
+        if (imageUrl && !/^(\/|https?:\/\/|data:image\/)/i.test(imageUrl)) return showToast('Image URL must be a local path or HTTP(S) URL.', 'error');
+        saveBanner(imageUrl);
+      }
+    });
+  }
+
+  function confirmBannerDelete(id) {
+    const banner = data.banners.find((item) => item.id === Number(id));
+    if (!banner) return;
+    showModal(`<div class="modal-header"><div><span class="eyebrow">REMOVE CAMPAIGN</span><h2>Delete this banner?</h2></div><button class="modal-close" data-modal-close aria-label="Close">×</button></div><p class="modal-description">“${escapeHtml(banner.title)}” will be removed from the banner list.</p><div class="modal-actions"><button class="button button-quiet" data-modal-close>Cancel</button><button class="button button-danger-quiet" data-banner-delete-confirm="${banner.id}">Delete banner</button></div>`);
   }
 
   function renderDashboard() {
@@ -508,11 +626,27 @@
   }
 
   document.getElementById('page-content').addEventListener('click', (event) => {
+    const createBanner = event.target.closest('[data-banner-create]');
+    if (createBanner) openBannerForm();
+    const editBanner = event.target.closest('[data-banner-edit]');
+    if (editBanner) openBannerForm(editBanner.dataset.bannerEdit);
+    const toggleBanner = event.target.closest('[data-banner-toggle]');
+    if (toggleBanner) {
+      const banner = data.banners.find((item) => item.id === Number(toggleBanner.dataset.bannerToggle));
+      if (banner) {
+        banner.active = !banner.active;
+        const saved = persistBanners();
+        render();
+        showToast(saved ? `${banner.title} ${banner.active ? 'activated' : 'deactivated'}.` : 'Banner changed, but browser storage is unavailable.', saved ? 'success' : 'error');
+      }
+    }
+    const deleteBanner = event.target.closest('[data-banner-delete]');
+    if (deleteBanner) confirmBannerDelete(deleteBanner.dataset.bannerDelete);
     const link = event.target.closest('[data-page-link]');
     if (link) {
       const pageFiles = {
         dashboard: 'index.html', users: 'users.html', kyc: 'kyc.html',
-        transactions: 'transactions.html', staking: 'staking.html',
+        transactions: 'transactions.html', banners: 'banners.html', staking: 'staking.html',
         binary: 'trading-config.html', settings: 'settings.html'
       };
       location.href = pageFiles[link.dataset.pageLink] || 'index.html';
@@ -561,6 +695,16 @@
     if (action) handleSimpleAction(action.dataset.action);
   });
   document.getElementById('modal-root').addEventListener('click', (event) => {
+    const deleteBanner = event.target.closest('[data-banner-delete-confirm]');
+    if (deleteBanner) {
+      const banner = data.banners.find((item) => item.id === Number(deleteBanner.dataset.bannerDeleteConfirm));
+      data.banners = data.banners.filter((item) => item.id !== Number(deleteBanner.dataset.bannerDeleteConfirm));
+      const saved = persistBanners();
+      closeModal();
+      render();
+      showToast(saved ? `${banner?.title || 'Banner'} deleted.` : 'Banner deleted, but browser storage is unavailable.', saved ? 'success' : 'error');
+      return;
+    }
     const kycDecision = event.target.closest('[data-kyc-decision]');
     if (kycDecision) {
       const user = data.kyc.find((item) => item.uid === kycDecision.dataset.id);
