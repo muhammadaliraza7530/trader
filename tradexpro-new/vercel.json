@@ -1,0 +1,29 @@
+{
+  "version": 2,
+  "buildCommand": "python -m compileall -q app.py api",
+  "outputDirectory": ".",
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/index.py"
+    },
+    {
+      "src": "/static/(.*)",
+      "dest": "/static/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/api/index.py"
+    }
+  ],
+  "functions": {
+    "api/index.py": {
+      "includeFiles": [
+        "app.py",
+        "templates/**",
+        "static/**",
+        "api/**"
+      ]
+    }
+  }
+}
