@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 <nav class="bottom-nav fixed bottom-0 left-0 right-0 z-50 bg-[#181A20] border-t border-gray-800 grid grid-cols-5" aria-label="Main navigation">
+=======
+<nav class="bottom-nav grid grid-cols-5" aria-label="Main navigation">
+>>>>>>> 04ce3dfa203f97408af9bc68a587e28df2e916e5
     <a class="nav-item flex min-w-0 flex-col items-center justify-center gap-[3px] text-[9px]{% if request.endpoint == 'dashboard' %} is-active text-white{% else %} text-[#899bb5]{% endif %}" href="{{ url_for('dashboard') }}"{% if request.endpoint == 'dashboard' %} aria-current="page"{% endif %}>
         <svg class="nav-icon-home" viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></svg>
         <span>Home</span>

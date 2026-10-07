@@ -10,10 +10,17 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
 </head>
+<<<<<<< HEAD
 <body class="dashboard-page overflow-x-hidden">
     <main class="dashboard-shell overflow-x-hidden pb-20">
         <div class="dashboard-content">
             <header class="topbar px-4">
+=======
+<body class="dashboard-page">
+    <main class="dashboard-shell">
+        <div class="dashboard-content">
+            <header class="topbar">
+>>>>>>> 04ce3dfa203f97408af9bc68a587e28df2e916e5
                 <a class="profile-trigger" id="profile-trigger" href="{{ url_for('profile') }}" aria-label="Open profile">
                     <span class="profile-avatar" aria-hidden="true">
                         <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"></circle><path d="M5 20a7 7 0 0 1 14 0"></path></svg>
@@ -33,6 +40,7 @@
                 </div>
             </header>
 
+<<<<<<< HEAD
             <section class="balance-actions px-4 pt-3" aria-label="Account balance and actions">
             <section class="account-overview" aria-label="Account balance">
                 <div class="balance-copy">
@@ -85,6 +93,33 @@
                 </div>
             </section>
             </section>
+=======
+            <section class="account-overview" aria-label="Account balance">
+                <div class="balance-copy">
+                    <p class="balance-label">Main Balance (USD)</p>
+                    <p class="balance-value">0.00</p>
+                    <p class="balance-conversion">≈ 0.00$</p>
+                </div>
+            </section>
+            <nav class="quick-actions" aria-label="Quick actions">
+                <a class="quick-action" href="{{ url_for('deposit_methods') }}">
+                    <span class="quick-action-icon action-deposit"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 17v3h16v-3"/></svg></span>
+                    <span>Deposit</span>
+                </a>
+                <a class="quick-action" href="{{ url_for('withdraw_methods') }}">
+                    <span class="quick-action-icon action-withdraw"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V4m-5 5 5-5 5 5M4 17v3h16v-3"/></svg></span>
+                    <span>Withdraw</span>
+                </a>
+                <button class="quick-action" id="transfer-trigger" type="button">
+                    <span class="quick-action-icon action-transfer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h15m-4-4 4 4-4 4M20 16H5m4-4-4 4 4 4"/></svg></span>
+                    <span>Transfer</span>
+                </button>
+                <a class="quick-action" href="{{ url_for('staking') }}">
+                    <span class="quick-action-icon action-staking"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 9 5-9 5-9-5 9-5Zm-9 9 9 5 9-5M3 16l9 5 9-5"/></svg></span>
+                    <span>Staking</span>
+                </a>
+            </nav>
+>>>>>>> 04ce3dfa203f97408af9bc68a587e28df2e916e5
         </div>
 
         <section class="markets" aria-label="Market prices">
@@ -94,6 +129,7 @@
                 <button class="market-tab" type="button" role="tab" aria-selected="false" data-market-tab="losers">Losers</button>
             </div>
 
+<<<<<<< HEAD
             <div class="market-head grid grid-cols-12 px-4 py-2 text-xs text-gray-400 font-medium" aria-hidden="true">
                 <span class="col-span-5 text-left">Asset / Pair</span>
                 <span class="col-span-4 text-right">Mini Chart / Price</span>
@@ -101,6 +137,46 @@
             </div>
 
             <div class="market-list" id="market-list" aria-live="polite"></div>
+=======
+            <div class="market-head" aria-hidden="true">
+                <span>Name</span>
+                <span>Last Price</span>
+                <span>24h chg%</span>
+            </div>
+
+            <div class="market-list" id="market-list">
+                <article class="market-row" data-category="hot" data-symbol="USDT" role="link" tabindex="0" aria-label="Trade USDT">
+                    <div class="asset-name"><span>USDT <small>/USDT</small></span><small class="asset-description">TetherUS /TetherUS</small></div>
+                    <div class="asset-price"><span>1.000148</span><small>1.0002$</small></div>
+                    <span class="change-pill">0.0100%</span>
+                </article>
+                <article class="market-row" data-category="hot gainers" data-symbol="BTC" role="link" tabindex="0" aria-label="Trade BTC">
+                    <div class="asset-name"><span>BTC <small>/USDT</small> <b class="hot-mark">&#128293;</b></span><small class="asset-description">Bitcoin /TetherUS</small></div>
+                    <div class="asset-price"><span>79974.010030</span><small>79974.0100$</small></div>
+                    <span class="change-pill">0.2300%</span>
+                </article>
+                <article class="market-row" data-category="hot gainers" data-symbol="ETH" role="link" tabindex="0" aria-label="Trade ETH">
+                    <div class="asset-name"><span>ETH <small>/USDT</small> <b class="hot-mark">&#128293;</b></span><small class="asset-description">Ethereum /TetherUS</small></div>
+                    <div class="asset-price"><span>2481.670030</span><small>2481.6700$</small></div>
+                    <span class="change-pill">1.0500%</span>
+                </article>
+                <article class="market-row" data-category="hot gainers" data-symbol="ALGO" role="link" tabindex="0" aria-label="Trade ALGO">
+                    <div class="asset-name"><span>ALGO <small>/USDT</small></span><small class="asset-description">ALGO /TetherUS</small></div>
+                    <div class="asset-price"><span>0.095030</span><small>0.0950$</small></div>
+                    <span class="change-pill">4.0500%</span>
+                </article>
+                <article class="market-row" data-category="hot losers" data-symbol="XRP" role="link" tabindex="0" aria-label="Trade XRP">
+                    <div class="asset-name"><span>XRP <small>/USDT</small></span><small class="asset-description">XRP /TetherUS</small></div>
+                    <div class="asset-price"><span>1.418730</span><small>1.4187$</small></div>
+                    <span class="change-pill">1.0500%</span>
+                </article>
+                <article class="market-row" data-category="hot losers" data-symbol="ADA" role="link" tabindex="0" aria-label="Trade ADA">
+                    <div class="asset-name"><span>ADA <small>/USDT</small></span><small class="asset-description">Cardano /TetherUS</small></div>
+                    <div class="asset-price"><span>0.220888</span><small>0.2209$</small></div>
+                    <span class="change-pill">3.0800%</span>
+                </article>
+            </div>
+>>>>>>> 04ce3dfa203f97408af9bc68a587e28df2e916e5
         </section>
     {% include "_bottom-nav.html" %}
     </main>
@@ -115,6 +191,66 @@
         </form>
     </dialog>
     <div class="dashboard-toast" id="dashboard-toast" role="status" aria-live="polite"></div>
+<<<<<<< HEAD
     <script src="{{ url_for('static', filename='dashboard.js') }}" defer></script>
+=======
+    <script>
+        const marketTabs = document.querySelectorAll('[data-market-tab]');
+        const marketRows = document.querySelectorAll('.market-row');
+
+        marketRows.forEach((row) => {
+            const openTrade = () => window.location.assign(`/trading/${row.dataset.symbol}`);
+            row.addEventListener('click', openTrade);
+            row.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    openTrade();
+                }
+            });
+        });
+
+        marketTabs.forEach((tab) => {
+            tab.addEventListener('click', () => {
+                marketTabs.forEach((item) => {
+                    const selected = item === tab;
+                    item.classList.toggle('is-active', selected);
+                    item.setAttribute('aria-selected', String(selected));
+                });
+
+                marketRows.forEach((row) => {
+                    row.hidden = !row.dataset.category.split(' ').includes(tab.dataset.marketTab);
+                });
+            });
+        });
+
+        const transferDialog = document.getElementById('transfer-dialog');
+        const toast = document.getElementById('dashboard-toast');
+        let toastTimer;
+
+        document.getElementById('transfer-trigger').addEventListener('click', () => transferDialog.showModal());
+        document.querySelectorAll('[data-close-dialog]').forEach((button) => {
+            button.addEventListener('click', () => document.getElementById(button.dataset.closeDialog).close());
+        });
+
+        document.getElementById('transfer-form').addEventListener('submit', (event) => {
+            event.preventDefault();
+            transferDialog.close();
+            event.currentTarget.reset();
+            showDashboardToast('Internal transfers are not enabled in this preview');
+        });
+
+        document.querySelector('.notification-button').addEventListener('click', () => {
+            showDashboardToast('You are all caught up');
+        });
+
+        function showDashboardToast(message) {
+            clearTimeout(toastTimer);
+            toast.textContent = message;
+            toast.classList.add('is-visible');
+            toastTimer = setTimeout(() => toast.classList.remove('is-visible'), 2600);
+        }
+
+    </script>
+>>>>>>> 04ce3dfa203f97408af9bc68a587e28df2e916e5
 </body>
 </html>
